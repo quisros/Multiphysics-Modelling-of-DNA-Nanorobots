@@ -59,20 +59,21 @@ MatrixXd read_data(string fname, int numrows, int numcols) {
 }
 
 void write_state(string fname, MatrixXd pos, MatrixXd f2v,
-                 Vector2d ball_pos, double ball_radius) {
+                 Vector2d ball_pos, double ball_radius, int NV, int NF) {
 
    // open a file in write mode.
    ofstream outfile; outfile.open(fname, ios::out);
 
    outfile << "pos" << endl;
-   outfile << pos << endl;
-   outfile << "f2v" << endl;
-   outfile << f2v << endl;
 
-   outfile << "ball_pos" << endl;
-   outfile << ball_pos << endl;
-   outfile << "ball_radius" << endl;
-   outfile << ball_radius << endl;
+   for (int i=0; i<NV; i++) outfile << "(" << pos(i,0) << " " << pos(i,1) << " " << 0 << ")" << endl;
+   outfile << "f2v" << endl;
+   //outfile << "NV is " << NV << endl;
+
+   for (int i=0; i<NF; i++) outfile << "3(" << f2v(i,0) << " " << f2v(i,1) << " " << f2v(i,2) << ")" << endl;
+   //outfile << "NF is " << NF << endl;
+   outfile << "ball_pos" << endl; outfile << ball_pos << endl;
+   outfile << "ball_radius" << endl; outfile << ball_radius << endl;
 
    outfile.close();
 }

@@ -4,7 +4,8 @@
 int main(int argc, char* argv[]) {
 
   FEM fem;
-  for(int n=0; n<40; n++) {
+  for(int n=0; n<100; n++) {
+    cout << "saving step: " << n << endl;
     for (int i=0; i<200; i++) {
       fem.update_U();
       fem.advance(2.5e-4);

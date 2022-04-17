@@ -1,4 +1,6 @@
 import sys
+import imageio
+import os
 import matplotlib.pyplot as plt
 
 def get_fname(sdir, itr):
@@ -6,9 +8,20 @@ def get_fname(sdir, itr):
 def get_pname(pdir, itr):
     return pdir + "state" + str(itr) + ".png"
 
+def make_gif(numitrs, pdir):
+
+    with imageio.get_writer('output.gif', mode='I') as writer:
+        for i in range(numitrs):
+            image = imageio.imread(get_pname(pdir, i))
+            writer.append_data(image)
+            os.remove(get_pname(pdir, i))
+
 statedir = "./states/"
 plotdir = "./plots/"
 numitrs = int(sys.argv[1])
+
+if not os.path.exists(plotdir):
+    os.makedirs(plotdir)
 
 for i in range(numitrs):
 
@@ -20,7 +33,7 @@ for i in range(numitrs):
     with open(file, 'r') as f:
 
         for line in f:
-            line = line.strip()
+            line = line.strip().rstrip(')').split('(')[-1]
 
             if line=="pos": continue
             elif line=="f2v": status = 1
@@ -48,3 +61,6 @@ for i in range(numitrs):
     plt.xlim(0,1)
     plt.ylim(0,1)
     plt.savefig(get_pname(plotdir,i))
+
+make_gif(numitrs, plotdir)
+os.rmdir(plotdir)

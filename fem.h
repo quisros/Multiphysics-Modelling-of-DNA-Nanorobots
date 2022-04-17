@@ -47,7 +47,7 @@ FEM::FEM() {
 
   ball_pos(0) = 0.4; ball_pos(1) = 0.0;
   ball_radius = 0.5;
-  init_mesh("./circle/"); //change to change mesh being used
+  init_mesh("./circle/"); //change this to change the mesh being used
 
   vel = MatrixXd::Zero(NV, 2); force = MatrixXd::Zero(NV, 2);
   B.resize(NF, Matrix2d(2,2)); F.resize(NF, Matrix2d(2,2));
@@ -171,5 +171,5 @@ void FEM::advance(double dt = 1e-4) {
 
 void FEM::save_state(int itr, string statedir) {
   string fname = statedir + "state" + to_string(itr) + ".txt";
-  write_state(fname, pos, f2v, ball_pos, ball_radius);
+  write_state(fname, pos, f2v, ball_pos, ball_radius, NV, NF);
 }
